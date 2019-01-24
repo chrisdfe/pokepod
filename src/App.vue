@@ -1,31 +1,36 @@
 <template>
   <div id="app">
-    <h3>current pokemon:</h3>
-    <p>{{ currentPokemon }}</p>
+    <IndexPage />
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import IndexPage from "@/components/pages/IndexPage";
 
 export default {
   name: "app",
-  components: {},
-
-  computed: {
-    ...mapState("pokemon", ["currentPokemon"])
-  },
-
-  methods: {
-    ...mapActions("pokemon", ["fetchByName"])
-  },
-
-  created() {
-    this.fetchByName({ name: "bulbasaur" }).then(response => {
-      console.log("response", response);
-    });
+  components: {
+    IndexPage
   }
 };
 </script>
 
-<style></style>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Cabin", Helvetica, Arial, sans-serif;
+}
+
+.container {
+  width: 960px;
+  padding: 0 1rem;
+  margin: 0 auto;
+}
+
+h1 {
+  font-weight: 600;
+}
+</style>

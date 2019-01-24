@@ -1,5 +1,6 @@
 export default {
-  all: {},
-  currentSearchTerm: "",
-  currentPokemon: ""
+  // TODO - make an object of id:objects
+  pokemonList: [],
+  currentPokemon: {},
+  totalCount: -1
 };
