@@ -9,7 +9,6 @@
         <div class="Pokeball">
           <img src="../../assets/icons/pokeball.png" alt="" />
         </div>
-        <!-- <PokeballIconLarge /> -->
       </div>
     </div>
     <slot />
@@ -56,7 +55,7 @@ export default {
 
   .PokeballWrapper {
     position: sticky;
-    top: 5rem;
+    top: 50%;
     margin-top: 5rem;
     text-align: center;
   }

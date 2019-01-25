@@ -116,15 +116,17 @@ export default {
 
 .SearchBar__search-icon,
 .SearchBar__close-icon {
+  $size: 1.8rem;
   position: absolute;
-  top: 50%;
-  width: 2rem;
-  height: 2rem;
+  top: 51%;
+  width: $size;
+  height: $size;
   transform: translateY(-50%);
+  fill: $brand-primary;
 }
 
 .SearchBar__search-icon {
-  left: 1rem;
+  left: 1.2rem;
 }
 
 .SearchBar__close-icon {

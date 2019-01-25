@@ -3,6 +3,8 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve">
-<rect x="15.5" y="4.1" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -6.6274 16)" width="1" height="23.7"/>
-<rect x="4.1" y="15.5" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -6.6274 16)" width="23.7" height="1"/>
+<path d="M24.4,25.4c-0.3,0-0.5-0.1-0.7-0.3L6.9,8.3c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l16.8,16.8c0.4,0.4,0.4,1,0,1.4
+	C24.9,25.3,24.6,25.4,24.4,25.4z"/>
+<path d="M7.6,25.4c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4L23.7,6.9c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4L8.3,25.1
+	C8.1,25.3,7.9,25.4,7.6,25.4z"/>
 </svg>

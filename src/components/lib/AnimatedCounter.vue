@@ -27,8 +27,6 @@ export default {
     };
   },
 
-  created() {},
-
   methods: {
     beginIncrementTimeout() {
       if (this.value > 0) {

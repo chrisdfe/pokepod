@@ -17,8 +17,17 @@
         </div>
 
         <div class="PokemonSearchResults" v-show="showSearchResults">
-          <div class="container">
+          <div class="PokemonSearchResults__header">
             <h2>Search Results</h2>
+
+            <button
+              class="PokemonSearchResults__header__back-to-browse"
+              @click="onBackToBrowseRequested"
+            >
+              <BackArrowIcon />
+
+              Back to browse
+            </button>
           </div>
 
           <div class="PokemonSearchResults__content-wrapper">
@@ -70,6 +79,7 @@ import _ from "lodash";
 import Velocity from "velocity-animate";
 
 import CloseIcon from "@/assets/icons/close.svg";
+import BackArrowIcon from "@/assets/icons/back-arrow.svg";
 
 import Hero from "@/components/lib/Hero";
 import PageContent from "@/components/lib/PageContent";
@@ -128,9 +138,14 @@ export default {
     },
 
     scrollToTopOfBrowseElement() {
-      Velocity(document.body, "scroll", {
-        duration: 800,
-        offset: this.$refs.hero.offsetHeight
+      return Promise.resolve().then(() => {
+        return new Promise((resolve, reject) => {
+          Velocity(document.body, "scroll", {
+            duration: 500,
+            offset: this.$refs.hero.$el.offsetHeight,
+            complete: () => resolve()
+          });
+        });
       });
     },
 
@@ -139,11 +154,19 @@ export default {
     },
 
     fetchNextPage() {
-      this.loadingStateWhile(this.paginatePokemonListNext());
+      this.loadingStateWhile(
+        this.scrollToTopOfBrowseElement().then(() =>
+          this.paginatePokemonListNext()
+        )
+      );
     },
 
     fetchPrevPage() {
-      this.loadingStateWhile(this.paginatePokemonListPrev());
+      this.loadingStateWhile(
+        this.scrollToTopOfBrowseElement().then(() =>
+          this.paginatePokemonListPrev()
+        )
+      );
     },
 
     clearPokemonSearch() {
@@ -171,13 +194,15 @@ export default {
     },
 
     onFetchNextPageRequested() {
-      this.scrollToTopOfBrowseElement();
       this.fetchNextPage();
     },
 
     onFetchPrevPageRequested() {
-      this.scrollToTopOfBrowseElement();
       this.fetchPrevPage();
+    },
+
+    onBackToBrowseRequested() {
+      this.clearPokemonSearch();
     }
   },
 
@@ -193,6 +218,7 @@ export default {
     AnimatedCounter,
     LoadingOverlay,
     CloseIcon,
+    BackArrowIcon,
     Pagination
   }
 };
@@ -211,21 +237,51 @@ export default {
   .PageContent {
     min-height: 700px;
   }
-
-  .PokemonSearchResults,
-  .PokemonBrowse {
-    padding: 1rem 0;
-  }
 }
 
 .Page--index__raised-content {
-  // background: $cool-grey;
   position: relative;
-  top: -3.9rem;
+  top: -4rem;
   padding-top: 1rem;
 }
 
 .Page--index__search-bar {
-  // padding: 0 1rem;
+}
+
+.PokemonSearchResults,
+.PokemonBrowse {
+  padding: 1rem 0;
+}
+
+.PokemonSearchResults__header {
+  display: flex;
+}
+
+.PokemonSearchResults__header__back-to-browse {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  margin-left: auto;
+  color: $brand-primary;
+  border: 0 none;
+  font-weight: bold;
+  font-family: $heading-font;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  svg {
+    fill: $brand-primary;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    opacity: 0.7;
+  }
 }
 </style>

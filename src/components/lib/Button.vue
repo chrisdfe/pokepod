@@ -40,7 +40,6 @@ $button-color-focus: lighten($brand-primary, 30%);
 .Button {
   display: inline-block;
   padding: 0.4rem 1rem 0.5rem;
-  // background: $button-color;
   background: transparent;
   border: 2px solid $button-color;
   border-radius: 3px;
