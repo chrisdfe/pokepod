@@ -1,3 +1,5 @@
+import "whatwg-fetch";
+
 import Vue from "vue";
 import store from "./store";
 
