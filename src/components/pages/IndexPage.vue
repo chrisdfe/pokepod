@@ -253,6 +253,7 @@ export default {
 
 .PokemonSearchResults__header {
   display: flex;
+  padding: 0 1rem;
 }
 
 .PokemonSearchResults__header__back-to-browse {
