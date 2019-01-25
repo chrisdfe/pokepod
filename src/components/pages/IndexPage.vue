@@ -7,7 +7,7 @@
 
     <PageContent>
       <div class="Page--index__raised-content">
-        <div class="Page--index__search-bar">
+        <div class="Page--index__search-bar" ref="searchBarElement">
           <SearchBar
             :value="currentPokemonSearchTerm"
             :placeholder="'e.g probopass'"
@@ -137,11 +137,17 @@ export default {
     },
 
     scrollToTopOfBrowseElement() {
+      // Warning - fragile
+      // Calculates the top offset of the search bar minus 1rem of padding
+      const topOffset =
+        this.$refs.hero.$el.offsetHeight -
+        this.$refs.searchBarElement.clientHeight / 2 -
+        16;
       return Promise.resolve().then(() => {
         return new Promise(resolve => {
           Velocity(document.body, "scroll", {
             duration: 500,
-            offset: this.$refs.hero.$el.offsetHeight,
+            offset: topOffset,
             complete: () => resolve()
           });
         });
