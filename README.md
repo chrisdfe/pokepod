@@ -1,4 +1,4 @@
-# pokepod
+# Poképod
 
 ## Project setup
 

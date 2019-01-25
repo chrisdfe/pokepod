@@ -78,7 +78,6 @@ import { mapActions, mapState } from "vuex";
 import _ from "lodash";
 import Velocity from "velocity-animate";
 
-import CloseIcon from "@/assets/icons/close.svg";
 import BackArrowIcon from "@/assets/icons/back-arrow.svg";
 
 import Hero from "@/components/lib/Hero";
@@ -139,7 +138,7 @@ export default {
 
     scrollToTopOfBrowseElement() {
       return Promise.resolve().then(() => {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
           Velocity(document.body, "scroll", {
             duration: 500,
             offset: this.$refs.hero.$el.offsetHeight,
@@ -217,7 +216,6 @@ export default {
     PokemonList,
     AnimatedCounter,
     LoadingOverlay,
-    CloseIcon,
     BackArrowIcon,
     Pagination
   }
@@ -261,9 +259,9 @@ export default {
   display: flex;
   align-items: center;
   background: transparent;
-  margin-left: auto;
   color: $brand-primary;
   border: 0 none;
+  margin-left: auto;
   font-weight: bold;
   font-family: $heading-font;
   cursor: pointer;

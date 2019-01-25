@@ -1,7 +1,11 @@
 <template>
   <div class="PokemonList">
     <div class="PokemonList__row">
-      <div class="PokemonList__column" v-for="pokemon in pokemonList">
+      <div
+        class="PokemonList__column"
+        v-for="(pokemon, pokemonIndex) in pokemonList"
+        :key="pokemonIndex"
+      >
         <PokemonListView :pokemon="pokemon" />
       </div>
     </div>

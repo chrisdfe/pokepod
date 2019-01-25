@@ -54,7 +54,7 @@ export default {
   },
 
   methods: {
-    onSubmit($event) {
+    onSubmit() {
       this.requestSearch();
     },
 
@@ -63,7 +63,7 @@ export default {
       this.$emit("clear:requested");
     },
 
-    onInput($event) {
+    onInput() {
       this.debouncedRequestSearch();
     },
 
@@ -99,12 +99,10 @@ export default {
   padding: 1.2rem 1.2rem 1.2rem 4.2rem;
   border: 2px solid #fff;
   border-radius: 40em;
-  // background-color: rgba(255, 255, 255, 0);
   background: #fff;
   font-size: 1rem;
   font-weight: 300;
   letter-spacing: 0.08rem;
-  // outline: 2px solid rgba(255, 255, 255, 0);
   transition: all 0.2s;
 
   &:focus {

@@ -1,6 +1,10 @@
 <template>
   <div class="PokemonStatsList">
-    <div class="PokemonStat" v-for="(stat, statIndex) in displayStats">
+    <div
+      class="PokemonStat"
+      v-for="(stat, statIndex) in displayStats"
+      :key="statIndex"
+    >
       <div class="PokemonStat__name">{{ formatStatName(stat.stat.name) }}</div>
       <h4 class="PokemonStat__value">{{ stat.base_stat }}</h4>
     </div>

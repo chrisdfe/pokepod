@@ -29,7 +29,6 @@ export default {
   methods: {
     onBrandImageLoad() {
       this.brandImageHasLoaded = true;
-      console.log("loaded");
     }
   }
 };

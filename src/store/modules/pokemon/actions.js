@@ -57,13 +57,13 @@ export default {
       .then(pokemonList => dispatch("setPokemonList", { pokemonList }));
   },
 
-  paginatePokemonListNext({ state, dispatch }) {
+  paginatePokemonListNext({ dispatch }) {
     return Promise.resolve()
       .then(() => dispatch("incrementPaginationOffset"))
       .then(() => dispatch("paginatePokemonListCurrent"));
   },
 
-  paginatePokemonListPrev({ state, dispatch }) {
+  paginatePokemonListPrev({ dispatch }) {
     return Promise.resolve()
       .then(() => dispatch("decrementPaginationOffset"))
       .then(() => dispatch("paginatePokemonListCurrent"));

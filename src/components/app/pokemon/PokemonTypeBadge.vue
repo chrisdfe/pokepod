@@ -69,8 +69,6 @@ export default {
 
 .PokemonTypeBadge {
   $size: 0.8rem;
-  // letter-spacing: 0.05em;
-  // font-weight: 600;
   display: flex;
   align-items: center;
   position: relative;
@@ -81,7 +79,6 @@ export default {
     width: $size;
     height: $size;
     border-radius: 40em;
-    // opacity: 0.5;
   }
 
   .PokemonTypeBadge__label {
@@ -89,11 +86,8 @@ export default {
     left: 50%;
     bottom: 1.4rem;
     transform: translateX(-50%);
-
-    // background: darken($cool-grey, 30%);
     color: #fff;
     text-align: center;
-    // padding: 0.2rem 0.4rem 0.4rem;
 
     opacity: 0;
     font-weight: 600;

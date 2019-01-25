@@ -1,6 +1,10 @@
 <template>
   <div class="PokemonTypeBadgeList">
-    <PokemonTypeBadge :type-name="type.type.name" v-for="type in types" />
+    <PokemonTypeBadge
+      :type-name="type.type.name"
+      v-for="(type, typeIndex) in types"
+      :key="typeIndex"
+    />
   </div>
 </template>
 
