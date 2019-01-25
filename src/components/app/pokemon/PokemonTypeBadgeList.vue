@@ -33,11 +33,7 @@ export default {
   justify-content: center;
 
   .PokemonTypeBadge {
-    margin-right: 0.3rem;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
+    margin-left: 0.3rem;
   }
 }
 </style>

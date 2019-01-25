@@ -68,14 +68,14 @@ export default {
 @import "../../../styles/variables";
 
 .PokemonTypeBadge {
-  $size: 0.8rem;
+  $size: 12px;
   display: flex;
   align-items: center;
   position: relative;
 
   .PokemonTypeBadge__badge {
     flex-shrink: 0;
-    flex-grow: 1;
+    flex-grow: 0;
     width: $size;
     height: $size;
     border-radius: 40em;
