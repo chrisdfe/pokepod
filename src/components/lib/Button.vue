@@ -40,9 +40,9 @@ $button-color-focus: lighten($brand-primary, 30%);
 .Button {
   display: inline-block;
   padding: 0.4rem 1rem 0.5rem;
-  background: transparent;
   border: 2px solid $button-color;
   border-radius: 3px;
+  background: transparent;
   color: $brand-primary;
   font-weight: 300;
   font-size: 0.9rem;
@@ -51,7 +51,7 @@ $button-color-focus: lighten($brand-primary, 30%);
   transition: all 0.2s;
 
   &:hover:not([disabled]) {
-    background: $button-color-hover;
+    background-color: $button-color-hover;
     border-color: $button-color-hover;
   }
 
@@ -62,12 +62,10 @@ $button-color-focus: lighten($brand-primary, 30%);
   }
 
   &:focus {
-    background: $button-color-focus;
     border-color: $button-color-focus;
   }
 
   &:active {
-    background: $button-color-active;
     border-color: $button-color-active;
   }
 

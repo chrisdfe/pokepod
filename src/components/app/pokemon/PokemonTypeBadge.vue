@@ -82,24 +82,41 @@ export default {
   }
 
   .PokemonTypeBadge__label {
+    $background: lighten($brand-primary, 30%);
     position: absolute;
     left: 50%;
     bottom: 1.4rem;
-    transform: translateX(-50%);
-    color: #fff;
-    text-align: center;
-
+    transform: translateX(-50%) translateY(3px);
+    padding: 0.3rem 0.4rem 0.4rem;
+    border-radius: 3px;
+    color: $brand-primary;
     opacity: 0;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    font-size: 0.7rem;
-    line-height: 1;
     transition: all 0.4s;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    background: $background;
+
+    &:after {
+      $height: 7px;
+      content: "";
+      position: absolute;
+      left: 50%;
+      display: block;
+      width: 2px;
+      height: $height;
+      background: $background;
+      transform: translateX(-50%);
+      bottom: -$height;
+    }
   }
 
   &:hover {
     .PokemonTypeBadge__label {
       opacity: 1;
+      transform: translateX(-50%);
     }
   }
 }

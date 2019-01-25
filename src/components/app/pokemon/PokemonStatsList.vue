@@ -68,10 +68,11 @@ export default {
 }
 
 .PokemonStat__name {
-  font-size: 0.7rem;
   margin-bottom: 0.2rem;
-  letter-spacing: 0.06em;
   color: lighten($brand-primary, 10%);
+  font-size: 0.7rem;
+  font-weight: bold;
+  letter-spacing: 0.06em;
 }
 
 .PokemonStat__value {
