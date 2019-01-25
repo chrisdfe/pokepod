@@ -15,14 +15,36 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "styles/variables";
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: "Roboto Mono", monospace;
-  background-color: #f2fafc;
+  font-family: $body-font;
+
+  background-color: $cool-grey;
+  color: $dark-grey;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  color: $dark-grey;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-family: $heading-font;
 }
 
 .container {

@@ -4,18 +4,27 @@ import * as mutationTypes from "./mutation-types";
 export default {
   setPaginationOffset({ commit }, params) {
     return Promise.resolve().then(() => {
-      commit(mutationTypes.CURRENT_PAGINATION_OFFSET_SET, params);
+      commit(mutationTypes.PAGINATION_OFFSET_SET, params);
     });
   },
 
   incrementPaginationOffset({ state, commit }) {
     return Promise.resolve().then(() => {
-      // TODO - use a config variable for '10'
-      commit(mutationTypes.CURRENT_PAGINATION_OFFSET_SET, {
-        offset: state.currentPaginationOffset + 10
+      commit(mutationTypes.PAGINATION_OFFSET_SET, {
+        offset: state.paginationOffset + state.paginationPerPage
       });
 
-      return state.currentPaginationOffset;
+      return state.paginationOffset;
+    });
+  },
+
+  decrementPaginationOffset({ state, commit }) {
+    return Promise.resolve().then(() => {
+      commit(mutationTypes.PAGINATION_OFFSET_SET, {
+        offset: state.paginationOffset - state.paginationPerPage
+      });
+
+      return state.paginationOffset;
     });
   },
 
@@ -32,10 +41,10 @@ export default {
     });
   },
 
-  paginatePokemonList({ state, dispatch, commit }) {
-    const offset = state.currentPaginationOffset;
+  paginatePokemonListCurrent({ state, dispatch, commit }) {
+    const offset = state.paginationOffset;
 
-    PokemonService.fetchAll({ offset })
+    return PokemonService.fetchAll({ offset })
       .then(response => {
         const { count, results } = response;
 
@@ -45,14 +54,22 @@ export default {
           results.map(({ name }) => PokemonService.fetchByName({ name }))
         );
       })
-      .then(pokemonList => dispatch("addToPokemonList", { pokemonList }))
-      .then(() => dispatch("incrementPaginationOffset"));
+      .then(pokemonList => dispatch("setPokemonList", { pokemonList }));
   },
 
-  // TODO
-  // 1) rename this method to indicate what gets updated in the state
-  // 2) transform response
-  fetchByName({ commit }, { name }) {
+  paginatePokemonListNext({ state, dispatch }) {
+    return Promise.resolve()
+      .then(() => dispatch("incrementPaginationOffset"))
+      .then(() => dispatch("paginatePokemonListCurrent"));
+  },
+
+  paginatePokemonListPrev({ state, dispatch }) {
+    return Promise.resolve()
+      .then(() => dispatch("decrementPaginationOffset"))
+      .then(() => dispatch("paginatePokemonListCurrent"));
+  },
+
+  fetchCurrentPokemonByName({ commit }, { name }) {
     return PokemonService.fetchByName({ name }).then(response => {
       commit(mutationTypes.CURRENT_POKEMON_SET, { pokemon: response });
       return response;

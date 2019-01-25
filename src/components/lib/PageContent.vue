@@ -10,7 +10,7 @@
 export default {};
 </script>
 
-<style>
+<style lang="scss">
 .PageContent {
   padding: 1rem 0;
 }

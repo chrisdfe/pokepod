@@ -9,8 +9,6 @@ export default {
     return fetch(url).then(response => response.json());
   },
 
-  // TODO -
-  // 2) transform results to pair it down to just the fields this app uses
   fetchByName({ name }) {
     return fetch(`${BASE_URL}${name.toLowerCase()}`).then(response => {
       if (response.status === 200) {

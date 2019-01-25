@@ -17,7 +17,7 @@ export default {
     state.pokemonList = state.pokemonList.concat(pokemonList);
   },
 
-  [types.CURRENT_PAGINATION_OFFSET_SET](state, { offset }) {
-    state.currentPaginationOffset = offset;
+  [types.PAGINATION_OFFSET_SET](state, { offset }) {
+    state.paginationOffset = offset;
   }
 };

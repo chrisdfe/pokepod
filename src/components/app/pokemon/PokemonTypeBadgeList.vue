@@ -20,16 +20,20 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .PokemonTypeBadgeList {
+  text-align: right;
+  padding: 0.4rem 0 0;
+  font-size: 0.8rem;
   display: flex;
-}
+  justify-content: center;
 
-.PokemonTypeBadgeList .PokemonTypeBadge {
-  margin-right: 0.5rem;
-}
+  .PokemonTypeBadge {
+    margin-right: 0.3rem;
 
-.PokemonTypeBadgeList .PokemonTypeBadge:last-child {
-  margin-right: 0;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 </style>

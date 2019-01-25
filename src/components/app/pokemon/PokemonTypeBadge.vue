@@ -1,10 +1,18 @@
 <template>
-  <div class="PokemonTypeBadge" :style="{ color: backgroundColor }">
-    {{ typeName }}
+  <div class="PokemonTypeBadge">
+    <div
+      class="PokemonTypeBadge__badge"
+      :style="{ backgroundColor: backgroundColor }"
+    ></div>
+    <div class="PokemonTypeBadge__label">
+      {{ typeName }}
+    </div>
   </div>
 </template>
 
 <script>
+import { deslugify } from "@/lib/utils";
+
 const typeColorMap = {
   normal: "#C2B49B",
   fire: "#F5941E",
@@ -13,7 +21,8 @@ const typeColorMap = {
   flying: "#C2B7D9",
   grass: "#19A148",
   poison: "#91288D",
-  electric: "#F9EB2F",
+  // electric: "#F9EB2F",
+  electric: "#FFC510",
   ground: "#FFCC67",
   psychic: "#EC2A79",
   rock: "#C39A6E",
@@ -28,8 +37,7 @@ const typeColorMap = {
   cyber: "#3755A3"
 };
 
-// TODO - pick better color
-const defaultTypeColor = "#AAABAC";
+const defaultTypeColor = typeColorMap.normal;
 
 export default {
   props: {
@@ -39,6 +47,10 @@ export default {
     }
   },
   computed: {
+    formattedTypeName() {
+      return deslugify(this.typeName);
+    },
+
     backgroundColor() {
       const backgroundColor = typeColorMap[this.typeName];
 
@@ -52,12 +64,49 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "../../../styles/variables";
+
 .PokemonTypeBadge {
-  /*
-  width: 0.8rem;
-  height: 0.8rem;
-  border-radius: 40em;
-  */
+  $size: 0.8rem;
+  // letter-spacing: 0.05em;
+  // font-weight: 600;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .PokemonTypeBadge__badge {
+    flex-shrink: 0;
+    flex-grow: 1;
+    width: $size;
+    height: $size;
+    border-radius: 40em;
+    // opacity: 0.5;
+  }
+
+  .PokemonTypeBadge__label {
+    position: absolute;
+    left: 50%;
+    bottom: 1.4rem;
+    transform: translateX(-50%);
+
+    // background: darken($cool-grey, 30%);
+    color: #fff;
+    text-align: center;
+    // padding: 0.2rem 0.4rem 0.4rem;
+
+    opacity: 0;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    font-size: 0.7rem;
+    line-height: 1;
+    transition: all 0.4s;
+  }
+
+  &:hover {
+    .PokemonTypeBadge__label {
+      opacity: 1;
+    }
+  }
 }
 </style>

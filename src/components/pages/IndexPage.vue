@@ -1,53 +1,59 @@
 <template>
   <div class="Page Page--index">
     <Hero>
-      <h1>pokécyclopedia</h1>
-
-      <h3>explore all <AnimatedCounter :value="totalCount" /> pokémon</h3>
+      <h1>Poképod</h1>
+      <h3>Explore all <AnimatedCounter :value="totalCount" /> Pokémon</h3>
     </Hero>
 
     <PageContent>
       <div class="Page--index__raised-content">
-        <!-- TODO - animate total count -->
-        <div class="container">
-          <SearchBar @search:requested="onPokemonSearchRequested" />
+        <div class="Page--index__search-bar">
+          <SearchBar
+            :value="currentPokemonSearchTerm"
+            :placeholder="'e.g probopass'"
+            @search:requested="onPokemonSearchRequested"
+            @clear:requested="onPokemonSearchClearRequested"
+          />
         </div>
 
-        <div class="Page--Index__Loading" v-if="isLoading || isSearching">
-          <div class="PokeballWrapper">
-            <PokeballIcon />
-          </div>
-        </div>
-        <div class="Page--index__search-results" v-if="showSearchView">
+        <div class="PokemonSearchResults" v-show="showSearchResults">
           <div class="container">
             <h2>Search Results</h2>
           </div>
-          <PokemonList
-            v-if="currentPokemonIsPresent"
-            :pokemonList="[currentPokemon]"
-          >
-          </PokemonList>
-          <div class="container" v-else>
-            <h3>No results for {{ currentPokemonSearchTerm }} :(</h3>
+
+          <div class="PokemonSearchResults__content-wrapper">
+            <div class="PokemonSearchResults__content">
+              <PokemonList
+                v-if="currentPokemonIsPresent"
+                :pokemonList="[currentPokemon]"
+              >
+              </PokemonList>
+              <div class="container" v-else>
+                <h3>No results for "{{ currentPokemonSearchTerm }}" :(</h3>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="Page--Index__browse" v-else>
+        <div class="PokemonBrowse" v-show="!showSearchResults">
           <div class="container">
-            <h2>Browse Pokemon</h2>
+            <h2>Browse Pokémon</h2>
           </div>
-          <PokemonList :pokemonList="pokemonList">
-            <template slot="pagination">
-              <div class="PokemonList__pagination-wrapper">
-                <LoadingButton
-                  :is-loading="isLoading"
-                  @click="onListPaginationRequested"
-                >
-                  load more
-                </LoadingButton>
-              </div>
-            </template>
-          </PokemonList>
+
+          <LoadingOverlay :is-loading="isLoading">
+            <PokemonList :pokemonList="pokemonList" />
+          </LoadingOverlay>
+
+          <div class="PaginationWrapper">
+            <Pagination
+              v-if="pokemonList.length"
+              :currentOffset="paginationOffset"
+              :totalItemCount="totalCount"
+              :perPage="paginationPerPage"
+              @next-page:requested="fetchNextPage"
+              @prev-page:requested="fetchPrevPage"
+            />
+          </div>
         </div>
       </div>
     </PageContent>
@@ -56,14 +62,17 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import _ from "lodash";
 
-import PokeballIcon from "@/assets/icons/pokeball.svg";
+import CloseIcon from "@/assets/icons/close.svg";
 
 import Hero from "@/components/lib/Hero";
 import PageContent from "@/components/lib/PageContent";
 import SearchBar from "@/components/lib/SearchBar";
-import LoadingButton from "@/components/lib/LoadingButton";
 import AnimatedCounter from "@/components/lib/AnimatedCounter";
+import Pagination from "@/components/lib/Pagination";
+
+import LoadingOverlay from "@/components/lib/LoadingOverlay";
 
 import PokemonList from "@/components/app/pokemon/PokemonList";
 
@@ -73,96 +82,128 @@ export default {
       currentPokemonSearchTerm: "",
       isLoading: false,
       isSearching: false,
-      showSearchView: false
+      showSearchResults: false
     };
   },
 
   computed: {
-    ...mapState("pokemon", ["pokemonList", "currentPokemon", "totalCount"]),
+    ...mapState("pokemon", [
+      "pokemonList",
+      "currentPokemon",
+      "paginationOffset",
+      "totalCount",
+      "paginationPerPage"
+    ]),
 
     currentPokemonIsPresent() {
-      return Object.keys(this.currentPokemon).length;
+      return !_.isEmpty(this.currentPokemon);
     }
   },
 
   methods: {
-    ...mapActions("pokemon", ["paginatePokemonList", "fetchByName"]),
+    ...mapActions("pokemon", [
+      "paginatePokemonListCurrent",
+      "paginatePokemonListNext",
+      "paginatePokemonListPrev",
+      "fetchCurrentPokemonByName"
+    ]),
 
-    // TODO - rename
-    fetchPokemonList() {
+    loadingStateWhile(operation) {
       this.isLoading = true;
 
-      this.paginatePokemonList().then(() => {
-        this.isLoading = false;
-      });
+      operation
+        .then(results => {
+          this.isLoading = false;
+          return results;
+        })
+        .catch(err => {
+          this.isLoading = false;
+          throw err;
+        });
+    },
+
+    fetchCurrentPage() {
+      this.loadingStateWhile(this.paginatePokemonListCurrent());
+    },
+
+    fetchNextPage() {
+      this.loadingStateWhile(this.paginatePokemonListNext());
+    },
+
+    fetchPrevPage() {
+      this.loadingStateWhile(this.paginatePokemonListPrev());
+    },
+
+    clearPokemonSearch() {
+      this.isSearching = false;
+      this.showSearchResults = false;
+      this.currentPokemonSearchTerm = "";
+    },
+
+    onPokemonSearchClearRequested() {
+      this.clearPokemonSearch();
     },
 
     onPokemonSearchRequested({ value }) {
-      this.isSearching = true;
       this.currentPokemonSearchTerm = value;
 
       if (value === "") {
-        this.isSearching = false;
-        this.showSearchView = false;
+        this.clearPokemonSearch();
       } else {
-        return this.fetchByName({ name: value }).then(() => {
+        this.isSearching = true;
+        return this.fetchCurrentPokemonByName({ name: value }).then(() => {
           this.isSearching = false;
-          this.showSearchView = true;
+          this.showSearchResults = true;
         });
       }
-    },
-
-    onListPaginationRequested() {
-      return this.fetchPokemonList();
     }
   },
 
   created() {
-    this.fetchPokemonList();
+    this.fetchCurrentPage();
   },
 
   components: {
     Hero,
     PageContent,
     SearchBar,
-    LoadingButton,
     PokemonList,
     AnimatedCounter,
-    PokeballIcon
+    LoadingOverlay,
+    CloseIcon,
+    Pagination
   }
 };
 </script>
 
-<style>
-.Page--index .Hero {
-  padding-bottom: 7rem;
-}
+<style lang="scss">
+@import "../../styles/variables";
 
-.Page--index .Hero .AnimatedCounter {
-  color: #fff;
+.Page--index {
+  .Hero {
+    .AnimatedCounter {
+      color: darken($brand-primary, 10%);
+    }
+  }
+
+  .PageContent {
+    min-height: 700px;
+  }
+
+  .PokemonSearchResults,
+  .PokemonBrowse {
+    padding: 1rem 0;
+  }
 }
 
 .Page--index__raised-content {
-  background: #f2fafc;
+  // background: $cool-grey;
   position: relative;
-  top: -3.5rem;
+  top: -3.9rem;
   padding-top: 1rem;
 }
 
-@keyframes spinning-pokeball {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.PokeballWrapper {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto;
-  animation: spinning-pokeball 2s linear infinite;
+.Page--index__search-bar {
+  // padding: 0 1rem;
 }
 </style>

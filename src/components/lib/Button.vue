@@ -11,10 +11,6 @@
 <script>
 export default {
   props: {
-    variant: {
-      type: String,
-      default: ""
-    },
     isDisabled: {
       type: Boolean,
       default: false
@@ -23,10 +19,6 @@ export default {
   computed: {
     classNames() {
       const classNames = ["Button"];
-
-      if (this.variant) {
-        classNames.push(`Button--${variant}`);
-      }
 
       if (this.isDisabled) {
         classNames.push("Button--disabled");
@@ -38,19 +30,52 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "../../styles/variables.scss";
+$button-color: lighten($brand-primary, 20%);
+$button-color-hover: lighten($brand-primary, 36%);
+$button-color-active: lighten($brand-primary, 30%);
+$button-color-focus: lighten($brand-primary, 30%);
+
 .Button {
   display: inline-block;
-  padding: 0.6rem 1.4rem;
-  background: #444;
-  border: 1px solid #444;
+  padding: 0.4rem 1rem 0.5rem;
+  // background: $button-color;
+  background: transparent;
+  border: 2px solid $button-color;
   border-radius: 3px;
-  color: #fff;
+  color: $brand-primary;
+  font-weight: 300;
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
   cursor: pointer;
-}
+  transition: all 0.2s;
 
-.Button:active {
-  background: #222;
-  border-color: #222;
+  &:hover:not([disabled]) {
+    background: $button-color-hover;
+    border-color: $button-color-hover;
+  }
+
+  &:focus,
+  &:active {
+    outline: 0 none;
+    border: 2px solid $brand-primary;
+  }
+
+  &:focus {
+    background: $button-color-focus;
+    border-color: $button-color-focus;
+  }
+
+  &:active {
+    background: $button-color-active;
+    border-color: $button-color-active;
+  }
+
+  &.Button--is-disabled,
+  &[disabled] {
+    opacity: 0.5;
+    cursor: default;
+  }
 }
 </style>

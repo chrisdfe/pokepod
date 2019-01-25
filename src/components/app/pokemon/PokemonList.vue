@@ -31,8 +31,10 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .PokemonList {
+  padding: 1rem 0;
+  justify-content: center;
 }
 
 .PokemonList__row {
@@ -46,7 +48,15 @@ export default {
   flex-basis: 33%;
   flex-grow: 0;
   flex-shrink: 0;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
+
+  @media screen and (max-width: 800px) {
+    flex-basis: 50%;
+  }
+
+  @media screen and (max-width: 600px) {
+    flex-basis: 100%;
+  }
 }
 
 .PokemonList__pagination-wrapper {

@@ -31,7 +31,6 @@ export default {
 
   methods: {
     beginIncrementTimeout() {
-      console.log("beginning");
       if (this.value > 0) {
         this.displayValue = 0;
         setTimeout(this.incrementDisplayValue, this.incrementTimeout);
@@ -39,7 +38,6 @@ export default {
     },
 
     incrementDisplayValue() {
-      console.log("displayValue", this.displayValue);
       if (this.displayValue > this.value - this.incrementAmount) {
         this.displayValue = this.value;
       } else {
@@ -57,10 +55,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .AnimatedCounter {
   display: inline-block;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid #fff;
+  font-weight: 700;
 }
 </style>

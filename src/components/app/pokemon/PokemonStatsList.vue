@@ -1,13 +1,18 @@
 <template>
   <div class="PokemonStatsList">
-    <div class="PokemonStat" v-for="(stat, statIndex) in statsList">
+    <div class="PokemonStat" v-for="(stat, statIndex) in displayStats">
       <div class="PokemonStat__name">{{ formatStatName(stat.stat.name) }}</div>
-      <div class="PokemonStat__value">{{ stat.base_stat }}</div>
+      <h4 class="PokemonStat__value">{{ stat.base_stat }}</h4>
     </div>
   </div>
 </template>
 
 <script>
+import { deslugify } from "@/lib/utils";
+
+// These are the important ones.
+const relevantStats = ["hp", "attack", "defense"];
+
 export default {
   props: {
     statsList: {
@@ -15,19 +20,36 @@ export default {
       required: true
     }
   },
+  computed: {
+    displayStats() {
+      return relevantStats.map(statName =>
+        this.statsList.find(stat => stat.stat.name === statName)
+      );
+    }
+  },
   methods: {
     formatStatName(statName) {
-      return statName.replace(/-/g, " ");
+      // Special case since hp is an acyonym
+      if (statName === "hp") {
+        return "HP";
+      }
+
+      return deslugify(statName);
     }
   }
 };
 </script>
 
-<style>
+<style lang="scss">
+@import "../../../styles/variables";
+
 .PokemonStatsList {
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
+  background: lighten($brand-primary, 36%);
+  color: $brand-primary;
+  padding: 1rem 0.5rem;
 }
 
 .PokemonStat {
@@ -38,15 +60,20 @@ export default {
   flex-basis: 33%;
   flex-direction: column;
   justify-content: flex-end;
+  text-align: center;
 }
 
 .PokemonStat__name {
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   margin-bottom: 0.2rem;
-  opacity: 0.7;
+  letter-spacing: 0.06em;
+  color: lighten($brand-primary, 10%);
 }
 
 .PokemonStat__value {
+  margin: 0;
   font-size: 1.7rem;
+  font-weight: bold;
+  color: $brand-primary;
 }
 </style>
