@@ -94,7 +94,7 @@ $pokemon-list-view-accent-border-color: lighten($brand-primary, 35%);
 }
 
 .PokemonListView__sprite {
-  padding: 3rem;
+  padding: 4rem 0 3rem;
   text-align: center;
 }
 
@@ -104,9 +104,5 @@ $pokemon-list-view-accent-border-color: lighten($brand-primary, 35%);
 
 .PokemonListView__types {
   margin-left: auto;
-}
-
-.PokemonListView__stats {
-  padding-top: 1rem;
 }
 </style>
