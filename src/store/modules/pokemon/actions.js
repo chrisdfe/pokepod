@@ -33,7 +33,7 @@ export default {
   },
 
   paginatePokemonList({ state, dispatch, commit }) {
-    const offset = state.currentPaginationOffset + 1;
+    const offset = state.currentPaginationOffset;
 
     PokemonService.fetchAll({ offset })
       .then(response => {

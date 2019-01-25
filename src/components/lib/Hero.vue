@@ -12,7 +12,7 @@ export default {};
 
 <style>
 .Hero {
-  padding: 2rem 0;
+  padding: 7rem 0;
   /*background: #ee7777;*/
   background: #ca3b47;
   color: #fff;
@@ -21,9 +21,14 @@ export default {};
 .Hero h1 {
   letter-spacing: 0.08em;
   font-size: 3rem;
-  font-weight: 700;
+  font-weight: 300;
   padding-bottom: 1rem;
   border-bottom: 1px solid #fff;
   margin-bottom: 1rem;
+}
+
+.Hero h3 {
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.5);
 }
 </style>

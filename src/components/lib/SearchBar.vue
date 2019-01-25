@@ -4,7 +4,7 @@
     <input
       class="SearchBar__input"
       type="text"
-      placeholder="e.g Probopass"
+      placeholder="e.g probopass"
       v-model="searchInput"
     />
 
@@ -47,10 +47,11 @@ export default {
 .SearchBar__input {
   display: block;
   width: 100%;
-  padding: 1rem 1rem 1rem 4rem;
+  padding: 1.2rem 1.2rem 1.2rem 4.2rem;
   border: 1px solid #111;
   background-color: rgba(255, 255, 255, 0);
-  font-size: 1.2rem;
+  font-size: 1rem;
+  font-weight: 300;
   letter-spacing: 0.08rem;
   outline: 2px solid rgba(255, 255, 255, 0);
   transition: all 0.2s;

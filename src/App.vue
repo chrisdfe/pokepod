@@ -21,7 +21,6 @@ export default {
 }
 
 body {
-  /*font-family: "Cabin", Helvetica, Arial, sans-serif;*/
   font-family: "Roboto Mono", monospace;
   background-color: #f2fafc;
 }
@@ -30,9 +29,5 @@ body {
   max-width: 960px;
   padding: 0 1rem;
   margin: 0 auto;
-}
-
-h1 {
-  font-weight: 600;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="PokemonTypeBadge" :style="{ backgroundColor: backgroundColor }">
-    <!-- {{ typeName }} -->
+  <div class="PokemonTypeBadge" :style="{ color: backgroundColor }">
+    {{ typeName }}
   </div>
 </template>
 
@@ -54,8 +54,10 @@ export default {
 
 <style>
 .PokemonTypeBadge {
+  /*
   width: 0.8rem;
   height: 0.8rem;
   border-radius: 40em;
+  */
 }
 </style>

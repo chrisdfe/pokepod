@@ -1,10 +1,9 @@
 <template>
   <div class="Page Page--index">
     <Hero>
-      <h1>Pokedex</h1>
+      <h1>pokécyclopedia</h1>
 
-      <!-- TODO - hide until totalCount -->
-      <h3>Search {{ totalCount }} pokemon</h3>
+      <h3>explore all <AnimatedCounter :value="totalCount" /> pokémon</h3>
     </Hero>
 
     <PageContent>
@@ -64,6 +63,7 @@ import Hero from "@/components/lib/Hero";
 import PageContent from "@/components/lib/PageContent";
 import SearchBar from "@/components/lib/SearchBar";
 import LoadingButton from "@/components/lib/LoadingButton";
+import AnimatedCounter from "@/components/lib/AnimatedCounter";
 
 import PokemonList from "@/components/app/pokemon/PokemonList";
 
@@ -127,6 +127,7 @@ export default {
     SearchBar,
     LoadingButton,
     PokemonList,
+    AnimatedCounter,
     PokeballIcon
   }
 };
@@ -135,6 +136,10 @@ export default {
 <style>
 .Page--index .Hero {
   padding-bottom: 7rem;
+}
+
+.Page--index .Hero .AnimatedCounter {
+  color: #fff;
 }
 
 .Page--index__raised-content {

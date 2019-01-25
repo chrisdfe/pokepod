@@ -11,30 +11,7 @@
       <img :src="pokemon.sprites.front_default" alt="" />
     </div>
 
-    <!--
-    <p>
-      <strong>Height:&nbsp;</strong>
-      <span>{{ pokemon.height }}</span>
-    </p>
-    -->
-
-    <!--
-    <p>
-      <strong>Abilities:&nbsp;</strong>
-      <span v-for="(ability, abilityIndex) in pokemon.abilities">
-        <span>{{ ability.ability.name }}</span>
-        <span v-if="abilityIndex < pokemon.abilities.length - 1">,&nbsp;</span>
-      </span>
-    </p>
-
-    <p>
-      <strong>stats:&nbsp;</strong>
-      <span v-for="(stat, statIndex) in pokemon.stats">
-        <span>{{ stat.stat.name }}: {{ stat.base_stat }}</span>
-        <span v-if="statIndex < pokemon.stats.length - 1">,&nbsp;</span>
-      </span>
-    </p>
-    -->
+    <PokemonStatsList :statsList="pokemon.stats" />
   </div>
 </template>
 
@@ -42,6 +19,7 @@
 import _ from "lodash";
 
 import PokemonTypeBadgeList from "@/components/app/pokemon/PokemonTypeBadgeList";
+import PokemonStatsList from "@/components/app/pokemon/PokemonStatsList";
 
 export default {
   props: {
@@ -51,7 +29,6 @@ export default {
     }
   },
   computed: {
-    // TODO - put this in pokemon transform function instead
     formattedPokemonId() {
       if (!this.pokemon) return;
       const { id } = this.pokemon;
@@ -65,7 +42,8 @@ export default {
     }
   },
   components: {
-    PokemonTypeBadgeList
+    PokemonTypeBadgeList,
+    PokemonStatsList
   }
 };
 </script>
@@ -79,9 +57,11 @@ export default {
   transition: 0.2s background-color;
 }
 
+/*
 .PokemonListView:hover {
   background-color: #fff;
 }
+*/
 
 .PokemonListView__header {
   display: flex;
@@ -107,5 +87,8 @@ export default {
 .PokemonListView__sprite {
   padding: 3rem;
   text-align: center;
+}
+
+.PokemonListView__stats {
 }
 </style>
