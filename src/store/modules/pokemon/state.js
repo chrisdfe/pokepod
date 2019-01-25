@@ -1,5 +1,5 @@
 export default {
-  // TODO - make an object of id:objects
+  currentPaginationOffset: 0,
   pokemonList: [],
   currentPokemon: {},
   totalCount: -1

@@ -2,20 +2,51 @@ import PokemonService from "@/services/PokemonService";
 import * as mutationTypes from "./mutation-types";
 
 export default {
-  fetchAll({ commit }, params) {
-    return PokemonService.fetchAll(params)
+  setPaginationOffset({ commit }, params) {
+    return Promise.resolve().then(() => {
+      commit(mutationTypes.CURRENT_PAGINATION_OFFSET_SET, params);
+    });
+  },
+
+  incrementPaginationOffset({ state, commit }) {
+    return Promise.resolve().then(() => {
+      // TODO - use a config variable for '10'
+      commit(mutationTypes.CURRENT_PAGINATION_OFFSET_SET, {
+        offset: state.currentPaginationOffset + 10
+      });
+
+      return state.currentPaginationOffset;
+    });
+  },
+
+  setPokemonList({ commit }, params) {
+    return Promise.resolve().then(() => {
+      commit(mutationTypes.POKEMON_LIST_SET, params);
+    });
+  },
+
+  addToPokemonList({ state, commit }, params) {
+    return Promise.resolve().then(() => {
+      commit(mutationTypes.POKEMON_LIST_ADD, params);
+      return state.pokemonList;
+    });
+  },
+
+  paginatePokemonList({ state, dispatch, commit }) {
+    const offset = state.currentPaginationOffset + 1;
+
+    PokemonService.fetchAll({ offset })
       .then(response => {
         const { count, results } = response;
+
         commit(mutationTypes.POKEMON_TOTAL_COUNT_SET, { count });
 
         return Promise.all(
           results.map(({ name }) => PokemonService.fetchByName({ name }))
         );
       })
-      .then(pokemonList => {
-        commit(mutationTypes.POKEMON_LIST_SET, { pokemonList });
-        return pokemonList;
-      });
+      .then(pokemonList => dispatch("addToPokemonList", { pokemonList }))
+      .then(() => dispatch("incrementPaginationOffset"));
   },
 
   // TODO

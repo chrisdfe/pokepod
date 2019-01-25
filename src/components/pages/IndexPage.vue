@@ -3,27 +3,37 @@
     <Hero>
       <h1>Pokedex</h1>
 
-      <SearchBar @search:requested="onPokemonSearchRequested" />
+      <!-- TODO - hide until totalCount -->
+      <h3>Search {{ totalCount }} pokemon</h3>
     </Hero>
 
     <PageContent>
-      <div class="Page--Index__SearchResultsBox" v-if="showSearchResults">
-        <div class="Page--Index__Searching" v-if="isSearching">Searching</div>
-        <div v-else>
-          <h3>Search Results:</h3>
-
-          <PokemonListView v-if="currentPokemon" :pokemon="currentPokemon" />
-          <div v-else><h3>No pokemon found</h3></div>
+      <div class="Page--index__raised-content">
+        <!-- TODO - animate total count -->
+        <div class="container">
+          <SearchBar @search:requested="onPokemonSearchRequested" />
         </div>
-      </div>
-
-      <div class="Page--Index__BrowseBox">
-        <h3>Browse:</h3>
 
         <div class="Page--Index__Loading" v-if="isLoading">Loading</div>
-        <div v-else v-for="pokemon in pokemonList">
-          <PokemonListView :pokemon="pokemon" />
-        </div>
+
+        <PokemonList
+          :pokemonList="pokemonDisplayList"
+          :show-pagination-button="showPaginationButton"
+        >
+          <template slot="pagination">
+            <div
+              class="PokemonList__pagination-wrapper"
+              v-if="showPaginationButton"
+            >
+              <LoadingButton
+                :is-loading="isLoading"
+                @click="onListPaginationRequested"
+              >
+                load more
+              </LoadingButton>
+            </div>
+          </template>
+        </PokemonList>
       </div>
     </PageContent>
   </div>
@@ -35,33 +45,44 @@ import { mapActions, mapState } from "vuex";
 import Hero from "@/components/lib/Hero";
 import PageContent from "@/components/lib/PageContent";
 import SearchBar from "@/components/lib/SearchBar";
+import LoadingButton from "@/components/lib/LoadingButton";
 
-import PokemonListView from "@/components/app/pokemon/PokemonListView";
+import PokemonList from "@/components/app/pokemon/PokemonList";
 
 export default {
   data() {
     return {
       isLoading: false,
-      isSearching: false,
-      currentPokemonSearchTerm: ""
+      isSearching: false
     };
   },
 
   computed: {
-    ...mapState("pokemon", ["pokemonList", "currentPokemon"]),
+    ...mapState("pokemon", ["pokemonList", "currentPokemon", "totalCount"]),
 
-    showSearchResults() {
-      return Object.keys(this.currentPokemon).length;
+    pokemonDisplayList() {
+      if (Object.keys(this.currentPokemon).length) {
+        return [this.currentPokemon];
+      }
+
+      // TODO - show currentPokemon if it exists
+      return this.pokemonList;
+    },
+
+    showPaginationButton() {
+      // TODO - don't currentPokemon if it exists
+      return true;
     }
   },
 
   methods: {
-    ...mapActions("pokemon", ["fetchAll", "fetchByName"]),
+    ...mapActions("pokemon", ["paginatePokemonList", "fetchByName"]),
 
+    // TODO - rename
     fetchPokemonList() {
       this.isLoading = true;
 
-      this.fetchAll().then(() => {
+      this.paginatePokemonList().then(() => {
         this.isLoading = false;
       });
     },
@@ -71,6 +92,10 @@ export default {
       return this.fetchByName({ name: value }).then(() => {
         this.isSearching = false;
       });
+    },
+
+    onListPaginationRequested() {
+      return this.fetchPokemonList();
     }
   },
 
@@ -82,7 +107,21 @@ export default {
     Hero,
     PageContent,
     SearchBar,
-    PokemonListView
+    LoadingButton,
+    PokemonList
   }
 };
 </script>
+
+<style>
+.Page--index .Hero {
+  padding-bottom: 7rem;
+}
+
+.Page--index__raised-content {
+  background: #f2fafc;
+  position: relative;
+  top: -3.5rem;
+  padding-top: 1rem;
+}
+</style>

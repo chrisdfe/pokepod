@@ -1,6 +1,12 @@
 <template>
   <form class="SearchBar" @submit.prevent="onSubmit">
-    <input class="SearchBar__input" type="text" v-model="searchInput" />
+    <!-- TODO - dynamic placeholder -->
+    <input
+      class="SearchBar__input"
+      type="text"
+      placeholder="e.g Probopass"
+      v-model="searchInput"
+    />
   </form>
 </template>
 
@@ -29,11 +35,16 @@ export default {
   display: block;
   width: 100%;
   padding: 0.8rem;
-  border: 1px solid #fff;
-  background-color: #fff;
+  border: 1px solid #111;
+  background-color: rgba(255, 255, 255, 0);
+  font-size: 1.5rem;
+  letter-spacing: 0.08rem;
+  outline: 2px solid rgba(255, 255, 255, 0);
+  transition: all 0.2s;
 }
 
 .SearchBar__input:focus {
-  /*outline: 2px solid blue;*/
+  outline: 2px solid #111;
+  background: #fff;
 }
 </style>

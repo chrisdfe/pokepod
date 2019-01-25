@@ -17,6 +17,7 @@
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
     "http-server": "^0.11.1",
+    "lodash": "^4.17.11",
     "prettier": "^1.16.1",
     "vue": "^2.5.21",
     "vue-template-compiler": "^2.5.21",
