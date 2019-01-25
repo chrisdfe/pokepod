@@ -55,7 +55,9 @@ export default {
   transition: opacity 0.2;
 
   .PokeballWrapper {
-    margin-top: 4rem;
+    position: sticky;
+    top: 5rem;
+    margin-top: 5rem;
     text-align: center;
   }
 

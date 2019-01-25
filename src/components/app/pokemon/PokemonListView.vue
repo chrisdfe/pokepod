@@ -66,6 +66,7 @@ $pokemon-list-view-accent-border-color: lighten($brand-primary, 35%);
 .PokemonListView {
   background: #fff;
   margin-bottom: 1rem;
+  overflow: hidden;
 }
 
 .PokemonListView__header {

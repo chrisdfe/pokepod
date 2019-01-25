@@ -1,6 +1,6 @@
 <template>
   <div class="Page Page--index">
-    <Hero>
+    <Hero ref="hero">
       <h1>Poképod</h1>
       <h3>Explore all <AnimatedCounter :value="totalCount" /> Pokémon</h3>
     </Hero>
@@ -35,7 +35,11 @@
           </div>
         </div>
 
-        <div class="PokemonBrowse" v-show="!showSearchResults">
+        <div
+          class="PokemonBrowse"
+          ref="browseElement"
+          v-show="!showSearchResults"
+        >
           <div class="container">
             <h2>Browse Pokémon</h2>
           </div>
@@ -50,8 +54,8 @@
               :currentOffset="paginationOffset"
               :totalItemCount="totalCount"
               :perPage="paginationPerPage"
-              @next-page:requested="fetchNextPage"
-              @prev-page:requested="fetchPrevPage"
+              @next-page:requested="onFetchNextPageRequested"
+              @prev-page:requested="onFetchPrevPageRequested"
             />
           </div>
         </div>
@@ -63,6 +67,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import _ from "lodash";
+import Velocity from "velocity-animate";
 
 import CloseIcon from "@/assets/icons/close.svg";
 
@@ -111,7 +116,7 @@ export default {
     loadingStateWhile(operation) {
       this.isLoading = true;
 
-      operation
+      return operation
         .then(results => {
           this.isLoading = false;
           return results;
@@ -120,6 +125,13 @@ export default {
           this.isLoading = false;
           throw err;
         });
+    },
+
+    scrollToTopOfBrowseElement() {
+      Velocity(document.body, "scroll", {
+        duration: 800,
+        offset: this.$refs.hero.offsetHeight
+      });
     },
 
     fetchCurrentPage() {
@@ -156,6 +168,16 @@ export default {
           this.showSearchResults = true;
         });
       }
+    },
+
+    onFetchNextPageRequested() {
+      this.scrollToTopOfBrowseElement();
+      this.fetchNextPage();
+    },
+
+    onFetchPrevPageRequested() {
+      this.scrollToTopOfBrowseElement();
+      this.fetchPrevPage();
     }
   },
 
