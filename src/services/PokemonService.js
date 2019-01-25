@@ -10,14 +10,15 @@ export default {
   },
 
   // TODO -
-  // 1) handle 404 (no pokemon exists with that name)
   // 2) transform results to pair it down to just the fields this app uses
   fetchByName({ name }) {
-    return fetch(`${BASE_URL}${name}`)
-      .then(response => response.json())
-      .then(response => {
-        console.log("fetchbyname", response);
-        return response;
-      });
+    return fetch(`${BASE_URL}${name.toLowerCase()}`).then(response => {
+      console.log("initial response", response);
+      if (response.status === 200) {
+        return response.json();
+      }
+
+      return {};
+    });
   }
 };

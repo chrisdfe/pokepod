@@ -6277,11 +6277,23 @@ supports-color@^6.1.0:
   dependencies:
     has-flag "^3.0.0"
 
+svg-loader@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/svg-loader/-/svg-loader-0.0.2.tgz#601ab2fdaa1dadae3ca9975b550de92a07e1d92b"
+
 svg-tags@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/svg-tags/-/svg-tags-1.0.0.tgz#58f71cee3bd519b59d4b2a843b6c7de64ac04764"
 
-svgo@^1.0.0:
+svg-to-vue@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/svg-to-vue/-/svg-to-vue-0.3.0.tgz#03f69bac4824bf5e32069ceca15779cd74100b24"
+  dependencies:
+    svgo "^1.1.1"
+    vue-template-compiler "^2.5.17"
+    vue-template-es2015-compiler "^1.6.0"
+
+svgo@^1.0.0, svgo@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/svgo/-/svgo-1.1.1.tgz#12384b03335bcecd85cfa5f4e3375fed671cb985"
   dependencies:
@@ -6733,7 +6745,14 @@ vue-style-loader@^4.1.0:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-template-compiler@^2.5.21:
+vue-svg-loader@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/vue-svg-loader/-/vue-svg-loader-0.11.0.tgz#1c1b6cbd6ef852ae1b26a2de7f63faa95a6b80c1"
+  dependencies:
+    loader-utils "^1.1.0"
+    svg-to-vue "^0.3.0"
+
+vue-template-compiler@^2.5.17, vue-template-compiler@^2.5.21:
   version "2.5.22"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.22.tgz#c3d3c02c65f1908205c4fbd3b0ef579e51239955"
   dependencies:
