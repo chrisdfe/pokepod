@@ -43,8 +43,9 @@ export default {
 
   paginatePokemonListCurrent({ state, dispatch, commit }) {
     const offset = state.paginationOffset;
+    const limit = state.paginationPerPage;
 
-    return PokemonService.fetchAll({ offset })
+    return PokemonService.fetchAll({ offset, limit })
       .then(response => {
         const { count, results } = response;
 

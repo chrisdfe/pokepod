@@ -1,6 +1,6 @@
 export default {
   paginationOffset: 0,
-  paginationPerPage: 10,
+  paginationPerPage: 12,
   pokemonList: [],
   currentPokemon: {},
   totalCount: -1
